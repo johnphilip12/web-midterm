@@ -27,3 +27,7 @@ Route::get('/home', [
 
 
 Route::resource('cars', App\Http\Controllers\CarController::class);
+
+
+
+Route::resource('logs', App\Http\Controllers\LogsController::class);

@@ -18,4 +18,6 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
 });
 
-Route::get('cars',[\App\Http\Controllers\API\CarsControllerAPI::class,'index']);
+Route::post('login',[\App\Http\Controllers\API\CarsControllerAPI::class,'login']);
+Route::post('register',[\App\Http\Controllers\API\CarsControllerAPI::class,'register']);
+Route::post('reset-password',[\App\Http\Controllers\API\CarsControllerAPI::class,'resetPassword']);
