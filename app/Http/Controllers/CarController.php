@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Requests\CreateCarRequest;
 use App\Http\Requests\UpdateCarRequest;
 use App\Repositories\CarRepository;
+use App\Http\Controllers\API\Validator;
 use App\Http\Controllers\AppBaseController;
 use Illuminate\Http\Request;
 use Flash;

@@ -2,6 +2,8 @@
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\API\UsersController;
+use App\Http\Controllers\API\CarsController;
 
 /*
 |--------------------------------------------------------------------------
@@ -18,6 +20,10 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
 });
 
-Route::post('login',[\App\Http\Controllers\API\CarsControllerAPI::class,'login']);
-Route::post('register',[\App\Http\Controllers\API\CarsControllerAPI::class,'register']);
-Route::post('reset-password',[\App\Http\Controllers\API\CarsControllerAPI::class,'resetPassword']);
+Route::post('login',[UsersController::class,'login']);
+Route::post('register',[UsersController::class,'register']);
+Route::post('reset-password',[UsersController::class,'resetPassword']);
+
+Route::get('get-all-cars', [CarsController::class, 'getAllCars']);
+Route::get('get-car', [CarsController::class, 'getCar']);
+Route::get('search-car', [CarsController::class, 'searchCar']);

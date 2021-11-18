@@ -1,30 +1,24 @@
 <?php
 
-
 namespace App\Http\Controllers\API;
-
 
 use App\Http\Controllers\Controller;
 use App\Models\Car;
-
-use App\Http\Controllers\AppBaseController;
-use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
-
-use App\Models\Movie;
-use Illuminate\Support\Facades\DB;
-
-use App\Models\Logs;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Str;
+use Illuminate\Support\Facades\Validator;
+use App\Models\User;
+use App\Models\Logs;
+use Flash;
+use Response;
 
-class CarsControllerAPI extends Controller
-{
+class UsersController extends Controller {
+
     public $successStatus = 200;
 
     public function login() {
         if (Auth::attempt(['username' => request('username'), 'password' => request('password')])) {
-
             $user = Auth::user();
 
             $success['token'] = Str::random(64);
@@ -32,24 +26,19 @@ class CarsControllerAPI extends Controller
             $success['id'] = $user->id;
             $success['name'] = $user->name;
 
+            $log = new Logs;
+            $log->userid = $user->id;
+            $log->log = "Login";
+            $log->logdetails = "User $user->username has logged in into my system";
+            $log->logtype = "API Login";
+            $log->save();
+
             // SAVE TOKEN
             $user->remember_token = $success['token'];
             $user->save();
-
-            // log->id = $user->id
-            // log->log = "Login"
-            // log->logdetails = "User $user->username has logged in into my system"
-            // log->logtype = "API Login"
-            $logs = new Logs();
-            $logs->userid = $user->id;
-            $logs->log = "Login";
-            $logs->logdetails = "User $user->name has logged in to my system";
-            $logs->logtype = "API login";
-            $logs->save();
-
-
             return response()->json($success, $this->successStatus);
 
+            
         } else {
             return response()->json(['response' => 'User not found'], 404);
         }
@@ -99,3 +88,4 @@ class CarsControllerAPI extends Controller
         }
     }
 }
+?>
